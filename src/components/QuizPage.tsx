@@ -70,68 +70,68 @@ const QuizPage = ({ topic, onComplete, onBackHome }: QuizPageProps) => {
   const getOptionStyle = (option: string) => {
     if (!showFeedback) {
       return selectedAnswer === option 
-        ? "border-[#6695b2] bg-[#6695b2]/10 shadow-md scale-105" 
-        : "border-gray-200 hover:border-[#6695b2]/50 hover:bg-blue-50/30";
+        ? "border-primary bg-primary/10 material-shadow ring-2 ring-primary/20" 
+        : "border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-200";
     }
     
     if (option === currentQuestion.correct_answer) {
-      return "border-[#51f052] bg-[#51f052]/10 text-green-800";
+      return "border-success bg-success/10 text-success";
     }
     
     if (selectedAnswer === option && option !== currentQuestion.correct_answer) {
-      return "border-[#b64127] bg-[#b64127]/10 text-red-800";
+      return "border-destructive bg-destructive/10 text-destructive";
     }
     
-    return "border-gray-200 opacity-60";
+    return "border-border opacity-60";
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-blue-50/20 py-8 px-4">
+    <div className="min-h-screen bg-background py-8 px-4 animate-fade-in">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <Button
             variant="outline"
             onClick={onBackHome}
-            className="flex items-center gap-2 hover:bg-gray-50"
+            className="flex items-center gap-2 material-ripple border-border hover:bg-secondary transition-all duration-200"
           >
             <Home className="w-4 h-4" />
-            Back to Home
+            Back to Topics
           </Button>
           
           <div className="text-center">
-            <h1 className="text-2xl md:text-3xl font-bold text-black">
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground">
               {getTopicDisplayName(topic)}
             </h1>
-            <p className="text-[#a9a9a9] mt-1">
+            <p className="text-muted-foreground mt-1">
               Question {currentQuestionIndex + 1} of {questions.length}
             </p>
           </div>
           
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <div className="text-lg font-bold text-[#6695b2]">
+              <div className="text-lg font-bold text-primary">
                 Score: {score}/{questions.length}
               </div>
-              <div className="text-sm text-[#a9a9a9]">
+              <div className="text-sm text-muted-foreground">
                 {Math.round((score / questions.length) * 100)}%
               </div>
             </div>
-            <div className="bg-[#ce81c3]/20 p-2 rounded-full">
-              <Trophy className="w-6 h-6 text-[#ce81c3]" />
+            <div className="bg-primary/10 p-2 rounded-full">
+              <Trophy className="w-6 h-6 text-primary" />
             </div>
           </div>
         </div>
 
         {/* Progress Bar */}
         <div className="mb-8">
-          <Progress value={progress} className="h-3" />
+          <Progress value={progress} className="h-2" />
         </div>
 
         {/* Question Card */}
-        <Card className="mb-8 shadow-lg border-2 border-blue-100 animate-fade-in">
+        <Card className="mb-8 material-shadow-lg border animate-scale-in">
           <CardContent className="p-8">
-            <h2 className="text-xl md:text-2xl font-semibold text-black mb-8 leading-relaxed">
+            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-8 leading-relaxed">
               {currentQuestion.question}
             </h2>
             
@@ -140,7 +140,7 @@ const QuizPage = ({ topic, onComplete, onBackHome }: QuizPageProps) => {
                 <button
                   key={index}
                   onClick={() => handleAnswerSelect(option)}
-                  className={`w-full p-4 text-left border-2 rounded-lg transition-all duration-300 ${getOptionStyle(option)}`}
+                  className={`w-full p-4 text-left border-2 rounded-lg material-ripple ${getOptionStyle(option)}`}
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-6 h-6 rounded-full border-2 border-current flex items-center justify-center text-sm font-bold">
@@ -166,13 +166,13 @@ const QuizPage = ({ topic, onComplete, onBackHome }: QuizPageProps) => {
             Previous
           </Button>
           
-          <div className="text-center text-[#a9a9a9]">
+          <div className="text-center text-muted-foreground">
             {showFeedback && (
-              <div className="animate-fade-in">
+              <div className="animate-slide-up">
                 {selectedAnswer === currentQuestion.correct_answer ? (
-                  <span className="text-green-600 font-semibold">✓ Correct!</span>
+                  <span className="text-success font-semibold">✓ Correct!</span>
                 ) : (
-                  <span className="text-red-600 font-semibold">✗ Incorrect</span>
+                  <span className="text-destructive font-semibold">✗ Incorrect</span>
                 )}
               </div>
             )}
@@ -181,7 +181,7 @@ const QuizPage = ({ topic, onComplete, onBackHome }: QuizPageProps) => {
           {isLastQuestion ? (
             <Button
               onClick={handleSubmitQuiz}
-              className="bg-[#ce81c3] hover:bg-[#b871b3] text-white flex items-center gap-2 px-8"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2 px-8 material-ripple"
               disabled={!selectedAnswer}
             >
               Submit Quiz
@@ -190,7 +190,7 @@ const QuizPage = ({ topic, onComplete, onBackHome }: QuizPageProps) => {
           ) : (
             <Button
               onClick={handleNext}
-              className="bg-[#6695b2] hover:bg-[#5a8199] text-white flex items-center gap-2"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2 material-ripple"
             >
               Next
               <ChevronRight className="w-4 h-4" />

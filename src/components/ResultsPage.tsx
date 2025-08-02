@@ -28,10 +28,10 @@ const ResultsPage = ({ score, totalQuestions, onRestart, onBackHome }: ResultsPa
   };
 
   const getPerformanceColor = () => {
-    if (percentage >= 90) return "text-[#ce81c3]";
-    if (percentage >= 80) return "text-[#51f052]";
-    if (percentage >= 70) return "text-[#6695b2]";
-    return "text-[#b64127]";
+    if (percentage >= 90) return "text-primary";
+    if (percentage >= 80) return "text-success";
+    if (percentage >= 70) return "text-primary";
+    return "text-destructive";
   };
 
   const getStars = () => {
@@ -72,14 +72,14 @@ const ResultsPage = ({ score, totalQuestions, onRestart, onBackHome }: ResultsPa
   }, [score]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#ce81c3]/10 via-white to-[#6695b2]/10 py-8 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-background py-8 px-4 relative overflow-hidden animate-fade-in">
       {/* Confetti Animation */}
       {showConfetti && (
         <div className="fixed inset-0 pointer-events-none z-50">
           {[...Array(50)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-2 h-2 bg-[#ce81c3] animate-bounce"
+              className="absolute w-2 h-2 bg-primary animate-bounce rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -93,24 +93,21 @@ const ResultsPage = ({ score, totalQuestions, onRestart, onBackHome }: ResultsPa
 
       <div className="max-w-4xl mx-auto text-center">
         {/* Winner Board Header */}
-        <div className="mb-8 animate-fade-in">
+        <div className="mb-8 animate-scale-in">
           <div className="flex justify-center mb-6">
             <div className="relative">
-              <div className="bg-gradient-to-r from-[#ce81c3] to-[#6695b2] p-8 rounded-full shadow-2xl">
-                <Crown className="w-16 h-16 text-white" />
+              <div className="bg-primary p-8 rounded-full material-shadow-lg">
+                <Crown className="w-16 h-16 text-primary-foreground" />
               </div>
               {showConfetti && (
                 <div className="absolute -top-4 -right-4">
-                  <Sparkles className="w-8 h-8 text-[#ce81c3] animate-spin" />
+                  <Sparkles className="w-8 h-8 text-primary animate-spin" />
                 </div>
               )}
             </div>
           </div>
           
-          <h1 
-            className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-[#ce81c3] to-[#6695b2] bg-clip-text text-transparent animate-bounce"
-            style={{ fontFamily: 'Georgia, serif' }}
-          >
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 text-foreground animate-slide-up">
             Congratulations!
           </h1>
           
@@ -120,21 +117,21 @@ const ResultsPage = ({ score, totalQuestions, onRestart, onBackHome }: ResultsPa
         </div>
 
         {/* Score Display */}
-        <Card className="mb-8 shadow-2xl border-4 border-[#ce81c3]/20 bg-gradient-to-br from-white to-[#ce81c3]/5 animate-scale-in">
+        <Card className="mb-8 material-shadow-lg border animate-scale-in">
           <CardContent className="p-12">
             <div className="mb-8">
               <div className="flex justify-center mb-4">
-                <Trophy className="w-20 h-20 text-[#ce81c3] animate-pulse" />
+                <Trophy className="w-20 h-20 text-primary animate-pulse" />
               </div>
               
               <div className="text-8xl md:text-9xl font-bold mb-4">
                 <span className={`${getPerformanceColor()} ${animateScore ? 'animate-pulse' : ''}`}>
                   {displayScore}
                 </span>
-                <span className="text-[#a9a9a9]">/{totalQuestions}</span>
+                <span className="text-muted-foreground">/{totalQuestions}</span>
               </div>
               
-              <div className="text-4xl md:text-5xl font-bold text-[#6695b2] mb-6">
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-6">
                 {percentage}%
               </div>
             </div>
@@ -146,8 +143,8 @@ const ResultsPage = ({ score, totalQuestions, onRestart, onBackHome }: ResultsPa
                   key={i}
                   className={`w-8 h-8 ${
                     i < getStars() 
-                      ? 'text-[#ce81c3] fill-[#ce81c3] animate-bounce' 
-                      : 'text-gray-300'
+                      ? 'text-primary fill-primary animate-bounce' 
+                      : 'text-muted'
                   }`}
                   style={{ animationDelay: `${i * 0.1}s` }}
                 />
@@ -156,17 +153,17 @@ const ResultsPage = ({ score, totalQuestions, onRestart, onBackHome }: ResultsPa
 
             {/* Achievement Badge */}
             {percentage === 100 && (
-              <div className="bg-gradient-to-r from-[#ce81c3] to-[#6695b2] text-white px-8 py-4 rounded-full text-xl font-bold inline-block animate-bounce">
+              <div className="bg-primary text-primary-foreground px-8 py-4 rounded-full text-xl font-bold inline-block animate-bounce material-shadow">
                 🏆 PERFECT SCORE! 🏆
               </div>
             )}
             {percentage >= 90 && percentage < 100 && (
-              <div className="bg-[#51f052] text-white px-8 py-4 rounded-full text-xl font-bold inline-block animate-bounce">
+              <div className="bg-success text-white px-8 py-4 rounded-full text-xl font-bold inline-block animate-bounce material-shadow">
                 ⭐ PYTHON MASTER! ⭐
               </div>
             )}
             {percentage >= 80 && percentage < 90 && (
-              <div className="bg-[#6695b2] text-white px-8 py-4 rounded-full text-xl font-bold inline-block animate-bounce">
+              <div className="bg-primary text-primary-foreground px-8 py-4 rounded-full text-xl font-bold inline-block animate-bounce material-shadow">
                 🎉 EXCELLENT! 🎉
               </div>
             )}
@@ -178,7 +175,7 @@ const ResultsPage = ({ score, totalQuestions, onRestart, onBackHome }: ResultsPa
           <Button
             onClick={onRestart}
             size="lg"
-            className="bg-[#ce81c3] hover:bg-[#b871b3] text-white px-8 py-4 text-xl rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-xl rounded-xl material-shadow material-ripple transition-all duration-200"
           >
             <RotateCcw className="mr-2 w-6 h-6" />
             Take Another Quiz
@@ -188,7 +185,7 @@ const ResultsPage = ({ score, totalQuestions, onRestart, onBackHome }: ResultsPa
             onClick={onBackHome}
             size="lg"
             variant="outline"
-            className="border-2 border-[#6695b2] text-[#6695b2] hover:bg-[#6695b2] hover:text-white px-8 py-4 text-xl rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-4 text-xl rounded-xl material-shadow material-ripple transition-all duration-200"
           >
             <Home className="mr-2 w-6 h-6" />
             Back to Topics
@@ -196,7 +193,7 @@ const ResultsPage = ({ score, totalQuestions, onRestart, onBackHome }: ResultsPa
         </div>
 
         {/* Fun Facts */}
-        <div className="mt-12 text-[#a9a9a9] animate-fade-in">
+        <div className="mt-12 text-muted-foreground animate-fade-in">
           <p className="text-lg">
             {percentage >= 80 
               ? "You've demonstrated excellent Python knowledge! Keep coding! 🐍" 
